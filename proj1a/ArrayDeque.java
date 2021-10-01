@@ -13,37 +13,56 @@ public class ArrayDeque<T> {
     }
 
     public void addFirst(T item) {
-        if (size == items.length) {
-            resize(items.length * 2);
-        }
+
         size += 1;
 
         items[nextFirst] = item;
-        nextFirst -= 1;
-        if (nextFirst < 0) {
-            nextFirst = nextFirst + items.length;
+        nextFirst = minusOne(nextFirst);
+
+        if (size == items.length - 1) {
+            resize(items.length * 2);
         }
+    }
+
+    //get index plus one
+    public int plusOne(int index) {
+        return (index + 1) % items.length;
+    }
+
+    //get index minus one
+    public int minusOne(int index) {
+        int result = index - 1;
+        if (result < 0) {
+            return result + items.length;
+        }
+        return result;
     }
 
     public void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
-        int firstLength = items.length - (nextFirst + 1);
-        int firstPosDest = a.length - firstLength;
-        System.arraycopy(items, nextFirst + 1, a, firstPosDest, firstLength);
-
-        int lastLength = nextLast;
-        System.arraycopy(items, 0, a, 0, lastLength);
+        // list in the middle of array
+        if (plusOne(nextFirst) < minusOne(nextLast)) {
+            int blockLength = minusOne(nextLast) - plusOne(nextFirst) +1;
+            System.arraycopy(items, plusOne(nextFirst), a, 0, blockLength);
+            nextFirst = capacity - 1;
+            nextLast = blockLength;
+        }
+        // first block on the right, second block on the left, divided.
+        else {
+            int firtBlockLength = (items.length - 1) - plusOne(nextFirst)+1;
+            System.arraycopy(items, plusOne(nextFirst), a, 0, firtBlockLength);
+            int secondBlockLength = minusOne(nextLast);
+            System.arraycopy(items, 0, a, firtBlockLength, secondBlockLength);
+            nextFirst = capacity - 1;
+            nextLast = firtBlockLength + secondBlockLength;
+        }
 
         items = a;
-        //adjust nextFirst, no need for nextLast
-        nextFirst = firstPosDest - 1;
 
     }
 
     public void addLast(T item) {
-        if (size == items.length) {
-            resize(items.length * 2);
-        }
+
         size += 1;
 
         items[nextLast] = item;
@@ -51,7 +70,10 @@ public class ArrayDeque<T> {
         if (nextLast > items.length - 1) {
             nextLast = nextLast % items.length;
         }
-
+        //resize if full
+        if (size == items.length - 1) {
+            resize(items.length * 2);
+        }
 
     }
 
