@@ -98,18 +98,22 @@ public class LinkedListDeque<T> {
         return node.item;
     }
 
+    public T getNode(Node node, int index) {
+        if (index == 0) {
+            return node.item;
+        }
+        index -= 1;
+        return getNode(node.next, index);
+    }
+
     public T getRecursive(int index) {
         if (index < 0 || index > size - 1) {
             return null;
         }
 
-            if (index == 0) {
-                return sentinel.next.item;
-            }
-            index -= 1;
-            sentinel = sentinel.next;
-            return getRecursive(index);
-
-        }
+        Node node = sentinel.next;
+        return getNode(node, index);
 
     }
+
+}
