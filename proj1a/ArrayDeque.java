@@ -77,7 +77,7 @@ public class ArrayDeque<T> {
         items[nextFirst + 1] = null;
         nextFirst += 1;
 
-        if (size / items.length < 0.25) {
+        if ((float) size / items.length < 0.25 && items.length >= 16) {
             resize(items.length / 2);
         }
         return result;
@@ -92,7 +92,7 @@ public class ArrayDeque<T> {
         items[nextLast - 1] = null;
         nextLast -= 1;
 
-        if (size / items.length < 0.25) {
+        if ((float) size / items.length < 0.25 && items.length >= 16) {
             resize(items.length / 2);
         }
         return result;
