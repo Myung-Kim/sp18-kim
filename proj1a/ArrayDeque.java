@@ -42,7 +42,7 @@ public class ArrayDeque<T> {
         }
         size += 1;
         items[nextLast] = item;
-        nextLast -= 1;
+        nextLast += 1;
     }
 
     public boolean isEmpty() {
