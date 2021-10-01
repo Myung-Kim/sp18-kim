@@ -69,13 +69,18 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
-        if (nextFirst == items.length - 1) {
+        if (size == 0) {
             return null;
         }
         size -= 1;
-        T result = items[nextFirst + 1];
-        items[nextFirst + 1] = null;
+        //if nextFirst exceeds items.length, shift to the start of the array
         nextFirst += 1;
+        if (nextFirst > items.length - 1) {
+            nextFirst = nextFirst % items.length;
+        }
+        T result = items[nextFirst];
+        items[nextFirst] = null;
+
 
         if ((float) size / items.length < 0.25 && items.length >= 16) {
             resize(items.length / 2);
@@ -84,13 +89,19 @@ public class ArrayDeque<T> {
     }
 
     public T removeLast() {
-        if (nextLast == 0) {
+        if (size == 0) {
             return null;
         }
         size -= 1;
-        T result = items[nextLast - 1];
-        items[nextLast - 1] = null;
+
         nextLast -= 1;
+        //if nextLast is less than zero, shift to the end of the array
+        if (nextLast < 0) {
+            nextLast = nextLast + items.length;
+        }
+
+        T result = items[nextLast];
+        items[nextLast] = null;
 
         if ((float) size / items.length < 0.25 && items.length >= 16) {
             resize(items.length / 2);
