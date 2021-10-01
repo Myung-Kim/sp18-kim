@@ -42,14 +42,14 @@ public class ArrayDeque<T> {
         T[] a = (T[]) new Object[capacity];
         // list in the middle of array
         if (plusOne(nextFirst) < minusOne(nextLast)) {
-            int blockLength = minusOne(nextLast) - plusOne(nextFirst) +1;
+            int blockLength = minusOne(nextLast) - plusOne(nextFirst) + 1;
             System.arraycopy(items, plusOne(nextFirst), a, 0, blockLength);
             nextFirst = capacity - 1;
             nextLast = blockLength;
         }
         // first block on the right, second block on the left, divided.
         else {
-            int firtBlockLength = (items.length - 1) - plusOne(nextFirst)+1;
+            int firtBlockLength = (items.length - 1) - plusOne(nextFirst) + 1;
             System.arraycopy(items, plusOne(nextFirst), a, 0, firtBlockLength);
             int secondBlockLength = minusOne(nextLast);
             System.arraycopy(items, 0, a, firtBlockLength, secondBlockLength);
@@ -106,10 +106,7 @@ public class ArrayDeque<T> {
         }
         size -= 1;
         //if nextFirst exceeds items.length, shift to the start of the array
-        nextFirst += 1;
-        if (nextFirst > items.length - 1) {
-            nextFirst = nextFirst % items.length;
-        }
+        nextFirst = plusOne(nextFirst);
         T result = items[nextFirst];
         items[nextFirst] = null;
 
@@ -126,11 +123,7 @@ public class ArrayDeque<T> {
         }
         size -= 1;
 
-        nextLast -= 1;
-        //if nextLast is less than zero, shift to the end of the array
-        if (nextLast < 0) {
-            nextLast = nextLast + items.length;
-        }
+        nextLast = minusOne(nextLast);
 
         T result = items[nextLast];
         items[nextLast] = null;
