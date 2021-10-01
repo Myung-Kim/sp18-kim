@@ -18,7 +18,7 @@ public class ArrayDeque<T> {
         }
         size += 1;
         items[nextFirst] = item;
-        nextFirst += 1;
+        nextFirst -= 1;
     }
 
     public void resize(int capacity) {
@@ -100,7 +100,7 @@ public class ArrayDeque<T> {
     }
 
     public T get(int index) {
-        if (index > size - 1) {
+        if (index > size - 1 || index < 0) {
             return null;
         }
         //shifted index
