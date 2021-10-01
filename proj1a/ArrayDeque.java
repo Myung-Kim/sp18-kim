@@ -51,7 +51,7 @@ public class ArrayDeque<T> {
         else {
             int firtBlockLength = (items.length - 1) - plusOne(nextFirst) + 1;
             System.arraycopy(items, plusOne(nextFirst), a, 0, firtBlockLength);
-            int secondBlockLength = minusOne(nextLast);
+            int secondBlockLength = nextLast;
             System.arraycopy(items, 0, a, firtBlockLength, secondBlockLength);
             nextFirst = capacity - 1;
             nextLast = firtBlockLength + secondBlockLength;
