@@ -17,8 +17,12 @@ public class ArrayDeque<T> {
             resize(items.length * 2);
         }
         size += 1;
+
         items[nextFirst] = item;
         nextFirst -= 1;
+        if (nextFirst < 0) {
+            nextFirst = nextFirst + items.length;
+        }
     }
 
     public void resize(int capacity) {
@@ -41,8 +45,14 @@ public class ArrayDeque<T> {
             resize(items.length * 2);
         }
         size += 1;
+
         items[nextLast] = item;
         nextLast += 1;
+        if (nextLast > items.length - 1) {
+            nextLast = nextLast % items.length;
+        }
+
+
     }
 
     public boolean isEmpty() {
