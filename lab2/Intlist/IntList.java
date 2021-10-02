@@ -81,6 +81,11 @@ public class IntList {
      */
 
     public static IntList dcatenate(IntList A, IntList B) {
+
+        if (A == null || B == null) {
+            return null;
+        }
+        
         //TODO:  fill in method
         //need to store the starting position
         IntList origin = A;
@@ -102,6 +107,11 @@ public class IntList {
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
     public static IntList catenate(IntList A, IntList B) {
+
+        if (A == null || B == null) {
+            return null;
+        }
+
         //TODO:  fill in method
         IntList result = new IntList();
         //store the starting position
