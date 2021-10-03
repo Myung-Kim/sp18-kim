@@ -82,10 +82,10 @@ public class IntList {
 
     public static IntList dcatenate(IntList A, IntList B) {
 
-        if (A == null || B == null) {
+        if (A == null && B == null) {
             return null;
         }
-        
+
         //TODO:  fill in method
         //need to store the starting position
         IntList origin = A;
@@ -108,7 +108,7 @@ public class IntList {
      */
     public static IntList catenate(IntList A, IntList B) {
 
-        if (A == null || B == null) {
+        if (A == null && B == null) {
             return null;
         }
 
@@ -134,6 +134,33 @@ public class IntList {
         }
 
         return origin;
+    }
+
+    public static IntList copyRecursive(IntList copy, IntList original) {
+        if (original == null) {
+            return copy;
+        }
+        copy.rest = new IntList(original.first, original.rest);
+        copy.rest.first = original.first;
+        return copyRecursive(copy.rest, original.rest);
+    }
+
+    /**
+     * non-destructive
+     *
+     * @param A
+     * @param B
+     * @return
+     */
+    public static IntList catenateResursive(IntList A, IntList B) {
+        if (A == null && B == null) {
+            return null;
+        }
+        IntList result = new IntList(0, null);
+        IntList temp = copyRecursive(result, A);
+        copyRecursive(temp, B);
+        return result.rest;
+
     }
 
 
